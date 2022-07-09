@@ -10,7 +10,7 @@ Install Pytest
 
 I seem to like to make things harder for myself, so I am doing this in Windows Subsystem for Linux instead of on Windows or a native OS. this breaks a few of the steps provided by the author.
 
-This guide worked - https://cloudbytes.dev/snippets/run-selenium-and-chrome-on-wsl2
+This guide worked - <https://cloudbytes.dev/snippets/run-selenium-and-chrome-on-wsl2>
 
 ```bash
 ## Install Chrome
@@ -39,11 +39,9 @@ def test_engine_functions_as_expected():
     assert True
 ```
 
-
-
 ## pytest.ini
 
-see pytest.ini, `[pytest]` starts the file. We can usually get away with a minimum of 3 configurations, what you test files look like, what the test functions look like, and what the classes should look like. 
+see pytest.ini, `[pytest]` starts the file. We can usually get away with a minimum of 3 configurations, what you test files look like, what the test functions look like, and what the classes should look like.
 
 ## Markers
 
@@ -60,19 +58,14 @@ def test_engine_functions_as_expected():
 
 Test only the tests you want to test with `pytest -m engine`. Document the ones you want to use and expose to other people in your pytest.ini file
 
-
 ## Smoke testing
 
-Bare minimum tests to be sure the whole thing won't blow up. You can mark it a smoke test. 
+Bare minimum tests to be sure the whole thing won't blow up. You can mark it a smoke test.
 
-You can run smoke and engine tests with `pytest -m "smoke or engine"`. 
-
+You can run smoke and engine tests with `pytest -m "smoke or engine"`.
 
 ## Classes to group tests
 
 simplifies grouping tests together. You can add functions really easy, mark it once, boom it all runs (see [body tests](../code/sportscar/body/test_body.py))
 
-
 ## Fixtures
-
-
