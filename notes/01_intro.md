@@ -69,3 +69,51 @@ You can run smoke and engine tests with `pytest -m "smoke or engine"`.
 simplifies grouping tests together. You can add functions really easy, mark it once, boom it all runs (see [body tests](../code/sportscar/body/test_body.py))
 
 ## Fixtures
+
+Any fixture created in conftest.py is accessible to any directory its in and anything under it! Just put it at the root of your tests folder
+
+You don't have to import them either! Pytest does the magic. 
+
+### Setup
+
+1. Create them in your `conftest.py` - There's a working example in this repo.
+2. Create your function and import what you need
+3. Make sure it returns what you want.
+4. Modify your test function to take the fixture as an argument
+
+```py title="conftest.py"
+# conftest.py
+from pytest import fixture
+
+from selenium import webdriver
+
+@fixture(scope='function')
+def chrome_browser():
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--window-size=1420,1080')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    browser = webdriver.Chrome(chrome_options=chrome_options)
+    return browser
+```
+
+```py
+#my test
+@mark.ui
+@mark.entertainment
+def test_can_navigate_to_entertainment_page(chrome_browser):
+    chrome_browser.get('http://www.siriusxm.com/')
+    assert True
+```
+
+## Reporting
+
+This section does not spark joy for me. Convert it to html or convert it to something jenkins can read. 
+
+```py
+sudo apt install lynx
+pytest --html="results.html"
+lynx results.html
+```
+
+Also export with `pytest --junitxml="results.xml"`
