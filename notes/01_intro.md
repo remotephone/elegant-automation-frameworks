@@ -66,15 +66,15 @@ You can run smoke and engine tests with `pytest -m "smoke or engine"`.
 
 ## Classes to group tests
 
-simplifies grouping tests together. You can add functions really easy, mark it once, boom it all runs (see [body tests](../code/sportscar/body/test_body.py))
+simplifies grouping tests together. You can add functions really easy, mark it once, boom it all runs (see [body tests](../code/section_1/sportscar/body/test_body.py))
 
 ## Fixtures
 
 Any fixture created in conftest.py is accessible to any directory its in and anything under it! Just put it at the root of your tests folder
 
-You don't have to import them either! Pytest does the magic. 
+You don't have to import them either! Pytest does the magic.
 
-### Setup
+### Fixture Setup
 
 1. Create them in your `conftest.py` - There's a working example in this repo.
 2. Create your function and import what you need
@@ -108,7 +108,7 @@ def test_can_navigate_to_entertainment_page(chrome_browser):
 
 ## Reporting
 
-This section does not spark joy for me. Convert it to html or convert it to something jenkins can read. 
+This section does not spark joy for me. Convert it to html or convert it to something jenkins can read.
 
 ```py
 sudo apt install lynx
@@ -117,3 +117,9 @@ lynx results.html
 ```
 
 Also export with `pytest --junitxml="results.xml"`
+
+
+----
+There's an arbitrary split here in my notes, section_2 code begins here. 
+----
+## Customizing Test Runs with CLI and Config files
