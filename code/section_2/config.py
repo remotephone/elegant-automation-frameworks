@@ -1,6 +1,3 @@
-from tarfile import SUPPORTED_TYPES
-
-
 class Config:
     def __init__(self, env):
         
