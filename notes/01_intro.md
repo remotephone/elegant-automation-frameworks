@@ -22,7 +22,7 @@ echo "$chrome_driver"
 curl -Lo chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/\
 ${chrome_driver}/chromedriver_linux64.zip"
 unzip chromedriver_linux64.zip
-sudo mnv chromedrive /usr/bin/chromedriver
+sudo mv chromedriver /usr/bin/chromedriver
 rm *.zip
 ```
 
@@ -247,3 +247,45 @@ XFAIL test_environment.py::test_environment_is_staging
 ```
 
 This isn't great though. Fix it, but this lets you know why its not fixed yet at least. 
+
+## Parameterization
+
+### Doing it on the fly
+
+Probably don't do this, but you can. 
+
+Match the input you need in the function with what you're parametrizing. Gonna be a string, and we need to provide it an iterable to go through.
+
+```py
+from pytest import mark
+
+@mark.parametrize('tv_brand', [
+        ('Samsung'),
+        ('Sony'),
+        ('Vizio')
+    ]
+)
+def test_television_turns_on(tv_brand):
+    # This is a toy example to show we're going through different TVs
+    print(f'{tv_brand} turns on as expected')
+```
+
+###
+
+When i add `params=[]` to the fixture, any test that calls this will run a test per parameter we pass.
+
+```py
+from pytest import fixture
+from selenium import webdriver
+
+
+@fixture(params=[webdriver.Chrome, webdriver.Firefox, webdriver.Edge])
+def browser(request):
+    driver = request.param
+    drvr = driver()
+    yield drvr
+    drvr.quit()
+```
+Write one test and hit it with 3 different browsers
+
+### Data Driven Testing
