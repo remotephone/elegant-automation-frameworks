@@ -270,7 +270,7 @@ def test_television_turns_on(tv_brand):
     print(f'{tv_brand} turns on as expected')
 ```
 
-###
+### 
 
 When i add `params=[]` to the fixture, any test that calls this will run a test per parameter we pass.
 
@@ -289,3 +289,75 @@ def browser(request):
 Write one test and hit it with 3 different browsers
 
 ### Data Driven Testing
+
+Create a fixture that loads a file and iterate through that
+
+```py
+conftest.py
+
+data_path = 'test_data.json'
+
+def load_test_data(path):
+    with open(path) as data_file:
+        data = json.load(data_file)
+    return data
+
+
+@fixture(params=load_test_data(data_path))
+def tv_brand(request):
+    data = request.param
+    return data
+```
+
+## Speed it up
+
+Install `pytest-xdist` and then just add the -nX flag where X is the number of threads
+
+```python
+└─(22:26:44 on master ✹ ✭)──> pytest -s -v -n4                                                                                                                                                             ──(Mon,Aug15)─┘
+=================================================================================================== test session starts ===================================================================================================
+platform linux -- Python 3.8.10, pytest-7.1.2, pluggy-1.0.0 -- /home/computer/.local/share/virtualenvs/elegant-automation-frameworks-7jaw7Dhg/bin/python
+cachedir: .pytest_cache
+metadata: {'Python': '3.8.10', 'Platform': 'Linux-5.10.102.1-microsoft-standard-WSL2-x86_64-with-glibc2.29', 'Packages': {'pytest': '7.1.2', 'py': '1.11.0', 'pluggy': '1.0.0'}, 'Plugins': {'forked': '1.4.0', 'metadata': '2.0.2', 'xdist': '2.5.0', 'html': '3.1.1'}}
+rootdir: /home/computer/gits/elegant-automation-frameworks/code/section_4, configfile: pytest.ini
+plugins: forked-1.4.0, metadata-2.0.2, xdist-2.5.0, html-3.1.1
+[gw0] linux Python 3.8.10 cwd: /home/computer/gits/elegant-automation-frameworks/code/section_4
+[gw1] linux Python 3.8.10 cwd: /home/computer/gits/elegant-automation-frameworks/code/section_4
+[gw2] linux Python 3.8.10 cwd: /home/computer/gits/elegant-automation-frameworks/code/section_4
+[gw3] linux Python 3.8.10 cwd: /home/computer/gits/elegant-automation-frameworks/code/section_4
+[gw0] Python 3.8.10 (default, Mar 15 2022, 12:22:08)  -- [GCC 9.4.0]
+[gw1] Python 3.8.10 (default, Mar 15 2022, 12:22:08)  -- [GCC 9.4.0]
+[gw2] Python 3.8.10 (default, Mar 15 2022, 12:22:08)  -- [GCC 9.4.0]
+[gw3] Python 3.8.10 (default, Mar 15 2022, 12:22:08)  -- [GCC 9.4.0]
+gw0 [4] / gw1 [4] / gw2 [4] / gw3 [4]
+scheduling tests via LoadScheduling
+
+tests/test_chemistry_results.py::test_result_2_completes_as_expected 
+tests/test_chemistry_results.py::test_result_3_completes_as_expected 
+tests/test_chemistry_results.py::test_result_4_completes_as_expected 
+tests/test_chemistry_results.py::test_result_1_completes_as_expected 
+[gw2] PASSED tests/test_chemistry_results.py::test_result_3_completes_as_expected 
+[gw0] PASSED tests/test_chemistry_results.py::test_result_1_completes_as_expected 
+[gw3] PASSED tests/test_chemistry_results.py::test_result_4_completes_as_expected 
+[gw1] PASSED tests/test_chemistry_results.py::test_result_2_completes_as_expected 
+
+==================================================================================================== 4 passed in 3.48s ====================================================================================================
+(elegant-automation-frameworks) ┌─(~/gits/elegant-automation-frameworks/code/section_4)────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────(computer@computer:pts/4)─┐
+```
+
+You won't get a lot of out this if you have only a few tests, but sometimes if you have a ton of tests, it will help.
+
+You should write isolated tests for this. 
+
+
+## Whitebox Testing
+
+We know the code, we know what to test, write some unit tests.
+
+- Tests should exist in tests/ directory outside of your module
+    - keeps them from being included with a built module
+    - __init__ files in module let your tests orient themselves and find the code
+- Tests should check functionality of your code and follow its structure
+    - if you wanna test functionality in myapp/feature folder, your tests should be in tests/feature
+
+## Running Unit tests with tox
