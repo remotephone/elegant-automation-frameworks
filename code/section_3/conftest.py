@@ -3,7 +3,7 @@ from selenium import webdriver
 import json
 
 
-data_path = 'test_data.json'
+data_path = "test_data.json"
 
 
 def load_test_data(path):

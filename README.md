@@ -22,3 +22,25 @@ If you follow along the videos, you'll have to move and shuffle things around as
 │   └── 01_intro.md
 └── requirements.txt
 ```
+
+
+## Ending notes
+
+Good course, learned much about testing. To summarize:
+
+- Test your code
+- pytest.ini
+- tox is cool, maybe not necessary 
+
+
+Good example of minimal pytest.ini (in root of project)
+
+```conf
+[pytest]
+python_functions = test_*
+python_files = test_*
+python_classes = *Tests
+
+markers = 
+    smoke: All critical smoke Tests
+```

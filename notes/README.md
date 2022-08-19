@@ -361,3 +361,48 @@ We know the code, we know what to test, write some unit tests.
     - if you wanna test functionality in myapp/feature folder, your tests should be in tests/feature
 
 ## Running Unit tests with tox
+
+Creates separation of concerns between logic of library and logic of the tests. You don't need pytest for the library and it should be separate. tox does this.
+
+`tox.ini` goes into the root of the direcotry
+```
+├── README.md
+├── elegantcasing.egg-info
+│   ├── PKG-INFO
+│   ├── SOURCES.txt
+│   ├── dependency_links.txt
+│   └── top_level.txt
+├── setup.py
+├── tests
+│   ├── pytest.ini
+│   └── test_titlecase.py
+├── titlecase
+│   ├── __init__.py
+│   └── titlecase.py
+└── tox.ini              ### Here it is
+```
+
+This is functioning tox.ini file
+
+```ini
+[tox]
+envlist = py38
+
+[testenv]
+deps = pytest
+commands =
+    pytest
+
+[pytest]
+python_classes = *Tests
+python_functions = test_*
+python_files = test_*
+```
+
+blamo.
+
+
+## Functional Tests/Blackbox Testing
+
+
+Write them I guess. This wasn't too illuminating. You're testing behavior of objects, your code is going to be more put in something and verify I get back what I expect instead of does this function do exactly what I think it will do.
